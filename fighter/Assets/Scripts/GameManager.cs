@@ -9,11 +9,12 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         _main.Initialize();
+        StartCoroutine(Co_StartGame());
     }
 
-    // Update is called once per frame
-    void Update()
+    private IEnumerator Co_StartGame()
     {
-        
+        yield return _main.Co_StartNewStage();
+        yield return _main.Co_StartGame();
     }
 }

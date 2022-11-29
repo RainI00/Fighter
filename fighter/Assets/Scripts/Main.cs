@@ -26,7 +26,7 @@ namespace InGame
             yield return Co_ReadyToStartGame();
         }
 
-        protected virtual IEnumerator Co_StartGame()
+        public virtual IEnumerator Co_StartGame()
         {
             _inputController?.OnPreStartGame();
 
