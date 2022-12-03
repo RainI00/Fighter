@@ -7,18 +7,30 @@ namespace InGame
     public class Main : AbstractController
     {
         protected InputController _inputController;
+        protected EntityController _entityController;
 
+        private List<AbstractController> _controllers = new List<AbstractController>();
         public virtual void Initialize()
         {
             _inputController = CreateController<InputController>();
+            _entityController = CreateController<EntityController>();
 
-            _inputController?.InitializeController();
+            _controllers.Add(_inputController);
+            _controllers.Add(_entityController);
 
+
+            foreach(var controller in _controllers)
+            {
+                controller?.InitializeController();
+            }
         }
 
         protected virtual IEnumerator Co_ReadyToStartGame(params object[] inData)
         {
-            yield return _inputController?.Co_ReadyToStartGame();
+            foreach(var controller in _controllers)
+            {
+                yield return controller?.Co_ReadyToStartGame();
+            }
         }
 
         public virtual IEnumerator Co_StartNewStage()
@@ -67,7 +79,10 @@ namespace InGame
                 return;
             }
 
-            _inputController?.PreAdvancedTime(inDeltaTime);
+            foreach (var controller in _controllers)
+            {
+                controller?.PreAdvancedTime(inDeltaTime);
+            }
         }
 
         /// <summary>
@@ -83,7 +98,10 @@ namespace InGame
 
             base.AdvancedTime(inDeltaTime);
 
-            _inputController?.AdvancedTime(inDeltaTime);
+            foreach (var controller in _controllers)
+            {
+                controller?.AdvancedTime(inDeltaTime);
+            }
         }
 
         /// <summary>
@@ -97,7 +115,10 @@ namespace InGame
                 return;
             }
 
-            _inputController?.LateAdvancedTime(inDeltaTime);
+            foreach (var controller in _controllers)
+            {
+                controller?.LateAdvancedTime(inDeltaTime);
+            }
         }
 
     }

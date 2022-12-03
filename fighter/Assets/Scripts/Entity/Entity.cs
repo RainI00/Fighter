@@ -6,7 +6,11 @@ namespace InGame
 {
     public class Entity : MonoBehaviour
     {
-        protected virtual IEnumerator Co_ReadyToStartGame()
+        protected virtual void Awake()
+        {
+            IGObjectPoolHelper.Add(this);
+        }
+        public virtual IEnumerator Co_ReadyToStartGame()
         {
             yield return null;
         }
@@ -20,6 +24,13 @@ namespace InGame
         {
 
         }
+        public virtual void PreAdvancedTime(float inDeltatime)
+        {
 
+        }
+        public virtual void LateAdvancedTime(float inDeltatime)
+        {
+
+        }
     }
 }
