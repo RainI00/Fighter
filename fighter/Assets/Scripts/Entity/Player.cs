@@ -58,11 +58,12 @@ namespace InGame
             
             float dir = 1;
             float angle = 0f;
+            float time = 0f;
             if (inDir == 1) dir = -1;
-            while(angle < MaxDegree)
+            while(time < 1f)
             {
-                angle += Time.deltaTime * speed;
-                _tr.RotateAround(Target.transform.position, Vector3.up, angle * dir);
+                time += Time.deltaTime * speed;
+                _tr.RotateAround(Target.transform.position, Vector3.up, MaxDegree * speed * Time.deltaTime * dir);
                 yield return new WaitForFixedUpdate();
             }
             state = State.None;
