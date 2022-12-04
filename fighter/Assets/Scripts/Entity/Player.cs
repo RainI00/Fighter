@@ -13,6 +13,7 @@ namespace InGame
         [SerializeField] private float range = 5f;
         [SerializeField] private float speed = 5f;
         [SerializeField] private float MaxDegree = 3f;
+
         public override IEnumerator Co_ReadyToStartGame()
         {
             _tr = this.GetComponent<Transform>();
@@ -31,13 +32,13 @@ namespace InGame
                 if(Input.GetKeyDown(KeyCode.A))
                 {
                     if(state != State.Move)
-                        Move(0);
+                        Move(TouchDir.LEFT);
                 }
 
                 if (Input.GetKeyDown(KeyCode.D))
                 {
                     if (state != State.Move)
-                        Move(1);
+                        Move(TouchDir.RIGHT);
                 }
 
                 _targetPosition = new Vector3(Target.transform.position.x, _tr.position.y, Target.transform.position.z);
@@ -45,21 +46,23 @@ namespace InGame
             }
         }
 
-        private void Move(int inDir)
+        private void Move(TouchDir inDir)
         {
             if (Target == null) return;
             StartCoroutine(Co_Move(inDir));
 
         }
 
-        private IEnumerator Co_Move(int inDir)
+        private IEnumerator Co_Move(TouchDir inDir)
         {
             state = State.Move;
             
             float dir = 1;
-            float angle = 0f;
             float time = 0f;
-            if (inDir == 1) dir = -1;
+            if (inDir == TouchDir.RIGHT)
+            {
+                dir = -1;
+            }
             while(time < 1f)
             {
                 time += Time.deltaTime * speed;

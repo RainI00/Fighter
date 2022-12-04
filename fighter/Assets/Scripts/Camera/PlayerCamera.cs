@@ -20,11 +20,6 @@ namespace InGame
             _trTarget = Target.transform;
         }
 
-        // Update is called once per frame
-        void Update()
-        {
-            
-        }
 
         private void LateUpdate()
         {

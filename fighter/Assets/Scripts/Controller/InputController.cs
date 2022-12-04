@@ -4,16 +4,16 @@ using UnityEngine;
 
 namespace InGame
 {
+    public enum TouchDir
+    {
+        UP,
+        DOWN,
+        RIGHT,
+        LEFT
+    }
     public class InputController : AbstractController
     {
         private Vector2 clickPoint;
-        enum TouchDir
-        {
-            UP,
-            DOWN,
-            RIGHT,
-            LEFT
-        }
         private TouchDir dir;
         public override void AdvancedTime(float inDeltaTime)
         {
