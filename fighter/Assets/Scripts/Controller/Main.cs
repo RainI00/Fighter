@@ -7,13 +7,13 @@ namespace InGame
     public class Main : AbstractController
     {
         protected InputController _inputController;
-        protected EntityController _entityController;
+        protected UnitController _entityController;
 
         private List<AbstractController> _controllers = new List<AbstractController>();
         public virtual void Initialize()
         {
             _inputController = CreateController<InputController>();
-            _entityController = CreateController<EntityController>();
+            _entityController = CreateController<UnitController>();
 
             _controllers.Add(_inputController);
             _controllers.Add(_entityController);

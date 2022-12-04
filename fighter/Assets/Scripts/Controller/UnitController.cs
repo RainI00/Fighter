@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace InGame
 {
-    public class EntityController :AbstractController
+    public class UnitController :AbstractController
     {
         public override IEnumerator Co_ReadyToStartGame(params object[] inData)
         { 

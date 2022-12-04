@@ -5,9 +5,9 @@ using UnityEngine;
 namespace InGame
 {
     
-    public class Player : Entity
+    public class Player : Unit
     {
-        private Entity Target;
+        private Unit Target;
         private Transform _tr;
         private Vector3 _targetPosition;
         [SerializeField] private float range = 5f;

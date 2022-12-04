@@ -10,7 +10,7 @@ namespace InGame
         Move,
         Attack
     }
-    public class Entity : MonoBehaviour
+    public class Unit : MonoBehaviour
     {
         protected State state = State.None;
         protected virtual void Awake()

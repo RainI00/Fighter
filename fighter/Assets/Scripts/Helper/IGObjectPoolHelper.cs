@@ -6,10 +6,10 @@ namespace InGame
 {
     public static class IGObjectPoolHelper
     {
-        private static List<Entity> _objectPool = new List<Entity>();
-        private static List<Entity> _monsterPool = new List<Entity>();
+        private static List<Unit> _objectPool = new List<Unit>();
+        private static List<Unit> _monsterPool = new List<Unit>();
         
-        public static void Add(Entity inEntity)
+        public static void Add(Unit inEntity)
         {
             _objectPool.Add(inEntity);
             if(inEntity is Monster)
@@ -18,18 +18,18 @@ namespace InGame
             }
         }
 
-        public static void Delete(Entity inEntity)
+        public static void Delete(Unit inEntity)
         {
             _objectPool.Remove(inEntity);
         }
 
-        public static List<Entity> GetAllObject()
+        public static List<Unit> GetAllObject()
         {
             return _objectPool;
         }
-        public static Entity GetClosestMonster(Transform inTransform)
+        public static Unit GetClosestMonster(Transform inTransform)
         {
-            Entity entity = null;
+            Unit entity = null;
             float dis = 0f;
             foreach(var monster in _monsterPool)
             {

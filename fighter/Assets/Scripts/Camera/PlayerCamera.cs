@@ -6,7 +6,7 @@ namespace InGame
 {
     public class PlayerCamera : MonoBehaviour
     {
-        [SerializeField] private Entity Target;
+        [SerializeField] private Unit Target;
 
         [SerializeField] private float Dist = 10f;
         [SerializeField] private float Height = 5f;

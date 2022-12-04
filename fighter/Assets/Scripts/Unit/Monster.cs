@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace InGame
 {
-    public class Monster : Entity
+    public class Monster : Unit
     {
         public override IEnumerator Co_ReadyToStartGame()
         {
