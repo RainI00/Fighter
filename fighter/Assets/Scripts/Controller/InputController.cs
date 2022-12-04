@@ -15,10 +15,29 @@ namespace InGame
     {
         private Vector2 clickPoint;
         private TouchDir dir;
+        
         public override void AdvancedTime(float inDeltaTime)
         {
             base.AdvancedTime(inDeltaTime);
-            if(Input.GetMouseButtonDown(0))
+
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                EventManager.Create<EvtDrag>((data, entity) =>
+                {
+                    data.TouchDirection = TouchDir.LEFT;
+                });
+            }
+
+            if (Input.GetKeyDown(KeyCode.D))
+            {
+                EventManager.Create<EvtDrag>((data, entity) =>
+                {
+                    data.TouchDirection = TouchDir.RIGHT;
+                });
+            }
+
+
+            if (Input.GetMouseButtonDown(0))
             {
                 clickPoint = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
             }

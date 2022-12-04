@@ -29,18 +29,6 @@ namespace InGame
             }
             else
             {
-                if(Input.GetKeyDown(KeyCode.A))
-                {
-                    if(state != State.Move)
-                        Move(TouchDir.LEFT);
-                }
-
-                if (Input.GetKeyDown(KeyCode.D))
-                {
-                    if (state != State.Move)
-                        Move(TouchDir.RIGHT);
-                }
-
                 _targetPosition = new Vector3(Target.transform.position.x, _tr.position.y, Target.transform.position.z);
                 _tr.LookAt(_targetPosition);
             }
@@ -49,6 +37,7 @@ namespace InGame
         public void Move(TouchDir inDir)
         {
             if (Target == null) return;
+            if (state == State.Move) return;
             StartCoroutine(Co_Move(inDir));
 
         }
