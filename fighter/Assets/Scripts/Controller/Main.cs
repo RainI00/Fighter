@@ -10,8 +10,12 @@ namespace InGame
         protected UnitController _entityController;
 
         private List<AbstractController> _controllers = new List<AbstractController>();
+
+        #region Initialize
         public virtual void Initialize()
         {
+            EventManager.Initialize();
+
             _inputController = CreateController<InputController>();
             _entityController = CreateController<UnitController>();
 
@@ -24,8 +28,10 @@ namespace InGame
                 controller?.InitializeController();
             }
         }
+        #endregion
 
-        protected virtual IEnumerator Co_ReadyToStartGame(params object[] inData)
+        #region Start Game
+        public override IEnumerator Co_ReadyToStartGame(params object[] inData)
         {
             foreach(var controller in _controllers)
             {
@@ -35,22 +41,28 @@ namespace InGame
 
         public virtual IEnumerator Co_StartNewStage()
         {
+            EventManager.SetEnabled(true);
+
             yield return Co_ReadyToStartGame();
         }
 
         public virtual IEnumerator Co_StartGame()
         {
-            _inputController?.OnPreStartGame();
-
-            _inputController?.StartGame();
-
-            _inputController?.OnPostStartGame();
+            foreach(var controller in _controllers)
+            {
+                controller?.SetActiveController(true);
+                controller?.OnPreStartGame();
+                controller?.StartGame();
+                controller?.OnPostStartGame();
+            }
 
             SetActiveController(true);
 
             yield return null;
         }
+        #endregion
 
+        #region Update
         private void Update()
         {
             if(IsActivated)
@@ -120,6 +132,6 @@ namespace InGame
                 controller?.LateAdvancedTime(inDeltaTime);
             }
         }
-
+        #endregion
     }
 }

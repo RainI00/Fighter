@@ -26,6 +26,11 @@ namespace InGame
             if(Input.GetMouseButtonUp(0))
             {
                 TouchDir dir = GetTouchDir(clickPoint, Input.mousePosition);
+
+                EventManager.Create<EvtDrag>((data, entity) =>
+                {
+                    data.TouchDirection = dir;
+                });
             }
         }
 

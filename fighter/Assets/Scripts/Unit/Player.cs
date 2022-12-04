@@ -46,7 +46,7 @@ namespace InGame
             }
         }
 
-        private void Move(TouchDir inDir)
+        public void Move(TouchDir inDir)
         {
             if (Target == null) return;
             StartCoroutine(Co_Move(inDir));

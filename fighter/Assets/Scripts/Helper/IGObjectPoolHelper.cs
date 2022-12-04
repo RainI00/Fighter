@@ -8,19 +8,24 @@ namespace InGame
     {
         private static List<Unit> _objectPool = new List<Unit>();
         private static List<Unit> _monsterPool = new List<Unit>();
-        
-        public static void Add(Unit inEntity)
+        public static Player Player;
+        public static void Add(Unit inUnit)
         {
-            _objectPool.Add(inEntity);
-            if(inEntity is Monster)
+            _objectPool.Add(inUnit);
+            if(inUnit is Monster)
             {
-                _monsterPool.Add(inEntity);
+                _monsterPool.Add(inUnit);
+            }
+
+            if(inUnit is Player)
+            {
+                Player = inUnit as Player;
             }
         }
 
-        public static void Delete(Unit inEntity)
+        public static void Delete(Unit inUnit)
         {
-            _objectPool.Remove(inEntity);
+            _objectPool.Remove(inUnit);
         }
 
         public static List<Unit> GetAllObject()
@@ -29,28 +34,28 @@ namespace InGame
         }
         public static Unit GetClosestMonster(Transform inTransform)
         {
-            Unit entity = null;
+            Unit unit = null;
             float dis = 0f;
             foreach(var monster in _monsterPool)
             {
-                if(entity == null)
+                if(unit == null)
                 {
-                    entity = monster;
-                    dis = GetDistance(inTransform, entity.transform);
+                    unit = monster;
+                    dis = GetDistance(inTransform, unit.transform);
                     continue;
                 }
-                if(entity != null)
+                if(unit != null)
                 {
                     float tempDis = GetDistance(inTransform, monster.transform);
                     if (tempDis < dis)
                     {
-                        entity = monster;
+                        unit = monster;
                         dis = tempDis;
                     }
                 }
             }
 
-            return entity;
+            return unit;
         }
         private static float GetDistance(Transform inFrom, Transform inTo)
         {

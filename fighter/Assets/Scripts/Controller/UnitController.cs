@@ -6,6 +6,11 @@ namespace InGame
 {
     public class UnitController :AbstractController
     {
+        public override void InitializeController(AbstractController inParentController = null)
+        {
+            base.InitializeController(inParentController);
+            SubscribeEventData<EvtDrag>(OnDrag);
+        }
         public override IEnumerator Co_ReadyToStartGame(params object[] inData)
         { 
             foreach(var entity in IGObjectPoolHelper.GetAllObject())
@@ -35,6 +40,22 @@ namespace InGame
             foreach (var entity in IGObjectPoolHelper.GetAllObject())
             {
                 entity.AdvancedTime(inDeltaTime);
+            }
+        }
+
+        private void OnDrag(List<IEventData> inData)
+        {
+            if(inData == null)
+            {
+                return;
+            }
+
+            for(int i=0;i<inData.Count; ++i)
+            {
+                if(inData[i] is EvtDrag dt)
+                {
+                    IGObjectPoolHelper.Player.Move(dt.TouchDirection);
+                }
             }
         }
     }
