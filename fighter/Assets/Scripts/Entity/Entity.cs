@@ -4,8 +4,15 @@ using UnityEngine;
 
 namespace InGame
 {
+    public enum State
+    {
+        None,
+        Move,
+        Attack
+    }
     public class Entity : MonoBehaviour
     {
+        protected State state = State.None;
         protected virtual void Awake()
         {
             IGObjectPoolHelper.Add(this);

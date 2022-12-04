@@ -4,12 +4,15 @@ using UnityEngine;
 
 namespace InGame
 {
+    
     public class Player : Entity
     {
         private Entity Target;
         private Transform _tr;
-
-        private float range = 10f;
+        private Vector3 _targetPosition;
+        [SerializeField] private float range = 5f;
+        [SerializeField] private float speed = 5f;
+        [SerializeField] private float MaxDegree = 3f;
         public override IEnumerator Co_ReadyToStartGame()
         {
             _tr = this.GetComponent<Transform>();
@@ -25,21 +28,44 @@ namespace InGame
             }
             else
             {
-                _tr.LookAt(Target.transform);
+                if(Input.GetKeyDown(KeyCode.A))
+                {
+                    if(state != State.Move)
+                        Move(0);
+                }
+
+                if (Input.GetKeyDown(KeyCode.D))
+                {
+                    if (state != State.Move)
+                        Move(1);
+                }
+
+                _targetPosition = new Vector3(Target.transform.position.x, _tr.position.y, Target.transform.position.z);
+                _tr.LookAt(_targetPosition);
             }
         }
 
-        public void Move(int inDir)
+        private void Move(int inDir)
         {
             if (Target == null) return;
-            if(inDir == 0)
-            {
+            StartCoroutine(Co_Move(inDir));
 
-            }
-            else if(inDir == 1)
-            {
+        }
 
+        private IEnumerator Co_Move(int inDir)
+        {
+            state = State.Move;
+            
+            float dir = 1;
+            float angle = 0f;
+            if (inDir == 1) dir = -1;
+            while(angle < MaxDegree)
+            {
+                angle += Time.deltaTime * speed;
+                _tr.RotateAround(Target.transform.position, Vector3.up, angle * dir);
+                yield return new WaitForFixedUpdate();
             }
+            state = State.None;
         }
     }
 }
